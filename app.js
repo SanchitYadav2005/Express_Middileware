@@ -7,17 +7,33 @@ app.use(morgan('tiny'));
 
 app.use('/', (req,res,next)=>{
     console.log("welocme");
-    //building my own request  method.
-    req.date = Date.now();
     next();
 });
 
-
+app.use('/date', (req,res,next)=>{
+    req.date = Date.now();
+    console.log(req.date);
+    next();
+});
+// fake authincation
+const verifyPassword = (req,res,next)=>{
+    const {password} = req.query;
+    if(password === 'shreya'){
+        console.log("working")
+        next();
+    }
+    res.send("wrong password");
+}
 
 app.get('/', (req,res)=>{
     res.send("hello");
 });
-// app.get('/date,', (req,res))
+app.get('/date', (req,res)=>{
+    res.send('working');
+});
+app.get('/name',verifyPassword ,(req,res)=>{
+    res.send("i like her");
+})
 
 app.listen(port, function(err){
     if(err){
