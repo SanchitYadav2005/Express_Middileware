@@ -7,6 +7,8 @@ app.use(morgan('tiny'));
 
 app.use('/', (req,res,next)=>{
     console.log("welocme");
+    //building my own request  method.
+    req.date = Date.now();
     next();
 });
 
@@ -14,7 +16,8 @@ app.use('/', (req,res,next)=>{
 
 app.get('/', (req,res)=>{
     res.send("hello");
-})
+});
+// app.get('/date,', (req,res))
 
 app.listen(port, function(err){
     if(err){
